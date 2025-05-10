@@ -11,10 +11,16 @@ const emit = defineEmits<{
 }>()
 
 const diffDuration = computed(() => {
-  const started_at = $dayjs(props.track.started_at)
-  const finished_at = props.track.finished_at ? $dayjs(props.track.finished_at) : $dayjs()
+  const startedAt = $dayjs(props.track.started_at)
+  const finishedAt = props.track.finished_at ? $dayjs(props.track.finished_at) : $dayjs()
 
-  return $dayjs.duration(finished_at.diff(started_at, 's'), 's').format('HH:mm:ss')
+  return $dayjs.duration(finishedAt.diff(startedAt, 's'), 's').format('HH:mm:ss')
+})
+const startFinishTime = computed(() => {
+  const startedAt = $dayjs(props.track.started_at)
+  const finishedAt = $dayjs(props.track.finished_at)
+
+  return startedAt.format('HH:mm') + ' - ' + finishedAt.format('HH:mm')
 })
 </script>
 
@@ -22,6 +28,7 @@ const diffDuration = computed(() => {
   <q-card class="my-card">
     <q-card-section horizontal>
       <q-card-section class="col-10 flex items-center">{{ track.title ?? 'Add title' }}</q-card-section>
+      <q-card-section class="flex items-center text-grey-8">{{ startFinishTime }}</q-card-section>
       <q-card-section class="flex items-center">{{ diffDuration }}</q-card-section>
       <q-card-section class="flex items-center">
         <q-btn icon="more_vert" flat>
