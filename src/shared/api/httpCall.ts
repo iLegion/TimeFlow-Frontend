@@ -7,7 +7,6 @@ export type Response<T = []> = {
   meta?: PaginationRemoteData
   // Record<string, string> | string[]
   errors?: Record<string, string>
-  token?: string
 }
 
 interface PaginationRemoteData {
