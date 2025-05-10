@@ -1,22 +1,23 @@
 import type { AxiosRequestConfig } from 'axios'
 import { axiosInstance } from './axiosInstance'
+import type {SimplePagination} from "@/interfaces/pagination.interface.ts";
 
 export type Response<T = []> = {
   message?: string
   data?: T
-  meta?: PaginationRemoteData
+  meta?: SimplePagination
   // Record<string, string> | string[]
   errors?: Record<string, string>
 }
 
-interface PaginationRemoteData {
-  current_page: number
-  last_page: number
-  per_page: number
-  total: number
-  to?: number
-  from?: number
-}
+// interface PaginationRemoteData {
+//   current_page: number
+//   last_page: number
+//   per_page: number
+//   total: number
+//   to?: number
+//   from?: number
+// }
 
 
 export const httpCall = async <T>(config: AxiosRequestConfig) => {
