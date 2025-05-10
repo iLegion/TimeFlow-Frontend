@@ -1,25 +1,88 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import TrackList from "@/components/Track/TrackList.vue";
+import TrackTimer from "@/components/Track/TrackTimer.vue";
 import useTrackApi from "@/api/track.http.ts";
+import type {
+  TrackInterface,
+  TrackUpdatePayloadInterface
+} from "@/interfaces/track/track.interface.ts";
 
 const trackApi = useTrackApi()
-const tracks = ref()
+
+const tracks = ref<TrackInterface[]>([])
+const activeTrack = ref<TrackInterface | null>(null)
 const pagination = ref()
+
+const isLoadingTimer = ref<boolean>(true)
+const isLoadingList = ref<boolean>(true)
 
 const getTracks = async () => {
   try {
-    // const response = trackApi.get()
+    const response = await trackApi.get()
 
-    // tracks.value = response
-  } catch (e) {}
+    tracks.value = response.data ?? []
+    pagination.value = response.meta
+  } catch (e) {
+    console.log(e)
+  } finally {
+    isLoadingList.value = false
+  }
+}
+const getActiveTrack = async () => {
+  try {
+    const response = await trackApi.getActive()
+
+    activeTrack.value = response.data ?? null
+  } catch (e) {
+    console.log(e)
+  } finally {
+    isLoadingTimer.value = false
+  }
+}
+
+const handleDeleteTrack = async (id: number) => {
+  try {
+    await trackApi.destroy(id)
+
+    tracks.value = tracks.value?.filter(track => track.id !== id)
+  } catch (e) {
+    console.log(e)
+  }
+}
+const handleSaveTrack = async (payload: TrackUpdatePayloadInterface) => {
+  try {
+    if (activeTrack.value) {
+      const response = await trackApi.update(activeTrack.value.id, payload)
+
+      if (response.data) tracks.value = [response.data, ...tracks.value]
+
+      activeTrack.value = null
+    } else {
+      activeTrack.value = (await trackApi.create(payload)).data ?? null
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 getTracks()
+getActiveTrack()
 </script>
 
 <template>
   <main>
-    <TrackList />
+    <TrackTimer
+      v-if="!isLoadingTimer"
+      class="q-mb-xl"
+      :track="activeTrack"
+      @save="handleSaveTrack"
+    />
+
+    <TrackList
+      v-if="!isLoadingList"
+      :tracks="tracks"
+      @delete="handleDeleteTrack"
+    />
   </main>
 </template>
