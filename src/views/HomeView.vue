@@ -7,13 +7,11 @@ import type {
   TrackInterface,
   TrackUpdatePayloadInterface
 } from "@/interfaces/track/track.interface.ts";
-import type { SimplePagination } from "@/interfaces/pagination.interface.ts";
 
 const trackApi = useTrackApi()
 
 const tracks = ref<TrackInterface[]>([])
 const activeTrack = ref<TrackInterface | null>(null)
-const pagination = ref<SimplePagination | null>(null)
 
 const isLoadingTimer = ref<boolean>(true)
 const isLoadingList = ref<boolean>(true)
@@ -23,7 +21,6 @@ const getTracks = async () => {
     const response = await trackApi.get()
 
     tracks.value = response.data ?? []
-    pagination.value = response.meta ?? null
   } catch (e) {
     console.log(e)
   } finally {
