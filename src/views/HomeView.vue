@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import TrackList from "@/components/Track/TrackList.vue";
-import TrackTimer from "@/components/Track/TrackTimer.vue";
+import TrackTimer from "@/components/Track/Timer/TrackTimer.vue";
 import useTrackApi from "@/api/track.http.ts";
 import type {
   TrackInterface,

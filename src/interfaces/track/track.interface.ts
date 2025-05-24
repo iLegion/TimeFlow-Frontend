@@ -13,6 +13,6 @@ export interface TrackCreatePayloadInterface {
 
 export interface TrackUpdatePayloadInterface {
   title: string | null
-  // started_at: string | null
-  // finished_at: string | null
+  started_at?: string
+  finished_at?: string
 }
