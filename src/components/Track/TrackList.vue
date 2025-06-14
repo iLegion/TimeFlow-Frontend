@@ -37,15 +37,25 @@ const handleDelete = (id: number) => emit('delete', id)
   <div>
     <div class="container">
       <div class="row">
-        <div v-for="(group, day) in groupTracksByDay" class="col-12 bg-white shadow-2 q-mb-lg">
+        <div
+          v-for="(group, day) in groupTracksByDay"
+          :key="'track-list-' + day"
+          class="col-12 bg-white shadow-2 q-mb-lg"
+        >
           <div class="q-pl-md q-pt-md q-pb-sm">{{ getGroupName(day) }}</div>
-          <template v-for="(track, index) in group">
+          <template
+            v-for="(track, index) in group"
+            :key="'track-item-' + index"
+          >
             <TrackItem
               :track="track"
               @delete="handleDelete"
             />
 
-            <q-separator v-if="(index + 1) !== group.length" />
+            <q-separator
+              :key="'track-separator-' + index"
+              v-if="(index + 1) !== group.length"
+            />
           </template>
         </div>
       </div>

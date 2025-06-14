@@ -1,15 +1,17 @@
 import { httpCall } from '@/shared/api/httpCall'
 import type {
   TrackInterface,
+  TrackIndexPayloadInterface,
   TrackCreatePayloadInterface,
   TrackUpdatePayloadInterface
 } from "@/interfaces/track/track.interface.ts";
 
 const useTrackApi = () => {
-  const get = () => {
+  const get = (data: TrackIndexPayloadInterface | null) => {
     return httpCall<TrackInterface[]>({
       method: 'get',
       url: '/tracks',
+      params: data
     })
   }
 

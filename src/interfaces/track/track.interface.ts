@@ -5,6 +5,11 @@ export interface TrackInterface {
   finished_at: string | null
 }
 
+export interface TrackIndexPayloadInterface {
+  from: string
+  to: string
+}
+
 export interface TrackCreatePayloadInterface {
   title: string | null
   // started_at: string
