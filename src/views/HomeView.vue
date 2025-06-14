@@ -5,8 +5,10 @@ import TrackTimer from "@/components/Track/Timer/TrackTimer.vue";
 import useTrackApi from "@/api/track.http.ts";
 import type {
   TrackInterface,
+  TrackIndexPayloadInterface,
   TrackUpdatePayloadInterface
 } from "@/interfaces/track/track.interface.ts";
+import TrackFilter from '@/components/Track/Filter/TrackFilter.vue'
 
 const trackApi = useTrackApi()
 
@@ -16,9 +18,9 @@ const activeTrack = ref<TrackInterface | null>(null)
 const isLoadingTimer = ref<boolean>(true)
 const isLoadingList = ref<boolean>(true)
 
-const getTracks = async () => {
+const getTracks = async (payload: TrackIndexPayloadInterface | null = null) => {
   try {
-    const response = await trackApi.get()
+    const response = await trackApi.get(payload)
 
     tracks.value = response.data ?? []
   } catch (e) {
@@ -63,6 +65,9 @@ const handleSaveTrack = async (payload: TrackUpdatePayloadInterface) => {
     console.log(e);
   }
 }
+const handleUpdateFilters = (payload: TrackIndexPayloadInterface) => {
+  getTracks(payload)
+}
 
 getTracks()
 getActiveTrack()
@@ -72,9 +77,14 @@ getActiveTrack()
   <main>
     <TrackTimer
       v-if="!isLoadingTimer"
-      class="q-mb-xl"
+      class="q-mb-md"
       :track="activeTrack"
       @save="handleSaveTrack"
+    />
+
+    <TrackFilter
+      class="q-mb-md"
+      @update="handleUpdateFilters"
     />
 
     <TrackList

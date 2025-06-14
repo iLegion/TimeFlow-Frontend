@@ -30,7 +30,7 @@ const getUser = async () => {
   }
 }
 
-if (token) getUser()
+getUser()
 </script>
 
 <template>
