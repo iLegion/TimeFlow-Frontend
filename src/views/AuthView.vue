@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import LoginForm from "@/components/Auth/LoginForm.vue";
 import RegisterForm from "@/components/Auth/RegisterForm.vue";
+import ConnectToSocialNetworks from '@/components/Auth/ConnectToSocialNetworks.vue'
 
 type Mode = 'login' | 'register'
 
@@ -17,7 +18,10 @@ const mode = ref<Mode>('login')
       <q-card-section v-else>
         <RegisterForm />
       </q-card-section>
-      <q-card-section class="flex justify-center">
+      <q-card-section class="text-center">
+        <ConnectToSocialNetworks />
+      </q-card-section>
+      <q-card-section class="text-center">
         <q-btn
           flat
           @click="mode === 'login' ? mode = 'register' : mode = 'login'"

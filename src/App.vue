@@ -1,40 +1,23 @@
 <script setup lang="ts">
-import { RouterView, useRouter } from 'vue-router'
-import useUserApi from "@/api/user.http.ts";
+import { RouterView } from 'vue-router'
 import { useUserStore } from "@/stores/user.ts";
-import { Unauthorized } from "@/exceptions/Unauthorized.ts";
+import SidebarDrawer from '@/components/Sidebar/SidebarDrawer.vue'
 
-const router = useRouter()
-const userApi = useUserApi()
 const userStore = useUserStore()
-
-const token = localStorage.getItem('token')
-
-const getUser = async () => {
-  try {
-    const response = await userApi.me()
-
-    if (response && response.data && token) {
-      userStore.setUser(response.data)
-      userStore.setToken(token)
-
-      await router.push({ name: 'home' })
-    }
-  } catch (e) {
-    console.log(e);
-
-    if (e instanceof Unauthorized) {
-      localStorage.removeItem('token')
-      await router.push({ name: 'auth' })
-    }
-  }
-}
-
-getUser()
 </script>
 
 <template>
-  <RouterView />
+  <q-layout view="lHh Lpr fFf" style="height: 100vh" container>
+    <SidebarDrawer v-if="userStore.user" />
+
+    <q-page-container>
+      <q-page>
+        <RouterView />
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
