@@ -28,7 +28,6 @@ const handleSubmit = async () => {
 
     if (response && response.data && response.token) {
       userStore.setUser(response.data)
-      userStore.setToken(response.token)
       localStorage.setItem('token', response.token)
 
       await router.push({ name: 'home' })
@@ -91,7 +90,9 @@ const handleSubmit = async () => {
       @update:model-value="setFieldError('password_confirmation', undefined)"
     />
 
-    <q-btn label="Log in" type="submit" />
+    <div class="text-center q-pt-md">
+      <q-btn label="Register" type="submit" />
+    </div>
   </q-form>
 </template>
 
