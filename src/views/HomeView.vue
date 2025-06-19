@@ -15,7 +15,6 @@ const trackApi = useTrackApi()
 const tracks = ref<TrackInterface[]>([])
 const activeTrack = ref<TrackInterface | null>(null)
 
-const isLoadingTimer = ref<boolean>(true)
 const isLoadingList = ref<boolean>(true)
 
 const getTracks = async (payload: TrackIndexPayloadInterface | null = null) => {
@@ -36,8 +35,6 @@ const getActiveTrack = async () => {
     activeTrack.value = response.data ?? null
   } catch (e) {
     console.log(e)
-  } finally {
-    isLoadingTimer.value = false
   }
 }
 
@@ -76,7 +73,6 @@ getActiveTrack()
 <template>
   <main>
     <TrackTimer
-      v-if="!isLoadingTimer"
       class="q-mb-md"
       :track="activeTrack"
       @save="handleSaveTrack"

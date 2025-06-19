@@ -6,10 +6,10 @@ const tab = ref<'profile' | 'general'>('profile');
 </script>
 
 <template>
-  <q-card flat>
+  <main>
     <q-tabs
       v-model="tab"
-      class="text-dark"
+      class="tabs bg-white text-dark"
       align="left"
       narrow-indicator
       dense
@@ -35,10 +35,14 @@ const tab = ref<'profile' | 'general'>('profile');
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </q-tab-panel>
     </q-tab-panels>
-  </q-card>
+  </main>
 </template>
 
 <style lang="scss" scoped>
+.tabs {
+  height: 88px;
+}
+
 .tab-panels {
   background-color: $grey-2;
 }
