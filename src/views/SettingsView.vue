@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SettingsProfileLogout from '@/components/Settings/Profile/SettingsProfileLogout.vue'
+import SettingsProfile from '@/components/Settings/Profile/SettingsProfile.vue'
 
 const tab = ref<'profile' | 'general'>('profile');
 </script>
 
 <template>
-  <q-card>
+  <q-card flat>
     <q-tabs
       v-model="tab"
       class="text-dark"
@@ -21,17 +21,9 @@ const tab = ref<'profile' | 'general'>('profile');
 
     <q-separator />
 
-    <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="profile">
-        <div>
-          <SettingsProfileLogout class="q-mb-md" />
-
-          <q-separator />
-
-          <div class="text-h6">Mails</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </div>
-
+    <q-tab-panels class="tab-panels" v-model="tab" animated>
+      <q-tab-panel name="profile" class="q-py-xl">
+        <SettingsProfile />
       </q-tab-panel>
 
       <q-tab-panel name="general">
@@ -46,6 +38,8 @@ const tab = ref<'profile' | 'general'>('profile');
   </q-card>
 </template>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.tab-panels {
+  background-color: $grey-2;
+}
 </style>
