@@ -53,6 +53,21 @@ const handleSubmit = async () => {
             Timer
           </q-item-section>
         </q-item>
+        <q-item
+          :active="isCurrentPage('projects')"
+          to="/projects"
+          active-class="sidebar-item-active"
+          dark
+          clickable
+        >
+          <q-item-section avatar>
+            <q-icon name="folder_open" />
+          </q-item-section>
+
+          <q-item-section>
+            Projects
+          </q-item-section>
+        </q-item>
       </q-list>
 
       <div class="col"></div>

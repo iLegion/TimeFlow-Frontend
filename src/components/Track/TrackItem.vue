@@ -25,7 +25,7 @@ const startFinishTime = computed(() => {
 </script>
 
 <template>
-  <q-card class="my-card no-shadow">
+  <q-card class="no-shadow">
     <q-card-section horizontal>
       <q-card-section class="col-10 flex items-center">{{ track.title ?? 'Add title' }}</q-card-section>
       <q-card-section class="flex items-center text-grey-8">{{ startFinishTime }}</q-card-section>

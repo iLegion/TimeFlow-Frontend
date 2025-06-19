@@ -4,6 +4,8 @@ import useUserApi from '@/api/user.http.ts'
 import HomeView from '../views/HomeView.vue'
 import AuthView from "../views/AuthView.vue";
 import SettingsView from "../views/SettingsView.vue";
+import ProjectsView from '@/views/ProjectsView.vue'
+import ProjectView from '@/views/ProjectView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +26,19 @@ const router = createRouter({
       name: 'settings',
       component: SettingsView,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: ProjectsView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/projects/:id',
+      name: 'project',
+      component: ProjectView,
+      meta: { requiresAuth: true },
+      props: true,
     }
   ],
 })
