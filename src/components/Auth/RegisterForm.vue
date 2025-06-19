@@ -8,8 +8,8 @@ import { ValidationErrors } from "@/exceptions/ValidationError.ts";
 const router = useRouter()
 const authApi = useAuthApi()
 const userStore = useUserStore()
-
 const { errors, defineField, setErrors, setFieldError, isFieldValid } = useForm();
+
 const [name, nameProps] = defineField('name');
 const [email, emailProps] = defineField('email');
 const [password, passwordProps] = defineField('password');
