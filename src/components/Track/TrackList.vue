@@ -3,12 +3,15 @@ import { computed } from "vue";
 import { $dayjs } from "@/shared/dayjs.ts";
 import TrackItem from "@/components/Track/TrackItem.vue";
 import type { TrackInterface } from "@/interfaces/track/track.interface.ts";
+import type { ProjectInterface } from '@/interfaces/project/project.interface.ts'
 
 const props = defineProps<{
   tracks: TrackInterface[]
+  projects: ProjectInterface[]
 }>()
 
 const emit = defineEmits<{
+  (e: 'selectProject', track: TrackInterface, project: ProjectInterface): void
   (e: 'delete', id: number): void
 }>()
 
@@ -48,6 +51,8 @@ const handleDelete = (id: number) => emit('delete', id)
         >
           <TrackItem
             :track="track"
+            :projects="projects"
+            @select-project="emit('selectProject', track, $event)"
             @delete="handleDelete"
           />
 
