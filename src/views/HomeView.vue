@@ -11,6 +11,9 @@ import type {
 import TrackFilter from '@/components/Track/Filter/TrackFilter.vue'
 import type { ProjectInterface } from '@/interfaces/project/project.interface.ts'
 import useProjectApi from '@/api/project.http.ts'
+import { useUserStore } from '@/stores/user.ts'
+
+const userStore = useUserStore()
 
 const trackApi = useTrackApi()
 const projectApi = useProjectApi()
@@ -115,10 +118,15 @@ getProjects()
       @update="handleUpdateActiveTrack"
     />
 
-    <TrackFilter
-      class="q-mb-md"
-      @update="handleUpdateFilters"
-    />
+    <div class="flex items-center full-height q-mb-md">
+      <TrackFilter @update="handleUpdateFilters" />
+
+      <q-card v-if="userStore.user && !userStore.user.email_verified_at" class="q-pa-sm" flat>
+        <q-card-section horizontal>
+          Please, confirm your email address.
+        </q-card-section>
+      </q-card>
+    </div>
 
     <TrackList
       v-if="!isLoadingList"
