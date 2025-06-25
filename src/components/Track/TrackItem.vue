@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { $dayjs } from "@/shared/dayjs.ts";
+import TrackTimerAdditional from '@/components/Track/Timer/TrackTimerAdditional.vue'
 import type { TrackInterface } from "@/interfaces/track/track.interface.ts";
+import type { ProjectInterface } from '@/interfaces/project/project.interface.ts'
 
 const props = defineProps<{
   track: TrackInterface
+  projects: ProjectInterface[]
 }>()
 const emit = defineEmits<{
+  (e: 'selectProject', payload: ProjectInterface): void
   (e: 'delete', id: number): void
 }>()
 
@@ -22,12 +26,25 @@ const startFinishTime = computed(() => {
 
   return startedAt.format('HH:mm') + ' - ' + finishedAt.format('HH:mm')
 })
+const truncatedTitle = computed(() =>
+  props.track.title && props.track.title.length > 100
+    ? props.track.title?.substring(0, 100) + '...'
+    : props.track.title ?? 'Add title')
 </script>
 
 <template>
   <q-card class="no-shadow">
     <q-card-section horizontal>
-      <q-card-section class="col-10 flex items-center">{{ track.title ?? 'Add title' }}</q-card-section>
+      <q-card-section class="col-10 flex items-center">
+        <div class="q-mr-md">{{ truncatedTitle }}</div>
+
+        <TrackTimerAdditional
+          :project="track.project"
+          :projects="projects"
+          title-position="right"
+          @select="emit('selectProject', $event)"
+        />
+      </q-card-section>
       <q-card-section class="flex items-center text-grey-8">{{ startFinishTime }}</q-card-section>
       <q-card-section class="flex items-center">{{ diffDuration }}</q-card-section>
       <q-card-section class="flex items-center">
